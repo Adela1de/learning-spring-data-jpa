@@ -7,10 +7,7 @@ import com.example.learningspringdatajpaproject.services.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,6 +17,18 @@ public class SchoolController {
     private final StudentService studentService;
     private final GuardianService guardianService;
 
+
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<Student> getStudentById(@PathVariable("studentId") Long studentId)
+    {
+        return ResponseEntity.ok().body(studentService.getStudentById(studentId));
+    }
+
+    @GetMapping("/guardian/{guardianId}")
+    public ResponseEntity<Guardian> getGuardianById(@PathVariable("guardianId") Long guardianId)
+    {
+        return ResponseEntity.ok().body(studentService.getGuardianById(guardianId));
+    }
 
     @PostMapping("/student/new")
     public ResponseEntity<Student> addStudent(@RequestBody Student student)

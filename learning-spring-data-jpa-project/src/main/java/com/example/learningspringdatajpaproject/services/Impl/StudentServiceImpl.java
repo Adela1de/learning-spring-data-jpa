@@ -27,6 +27,16 @@ public class StudentServiceImpl implements StudentService {
         return guardianRepository.save(guardian);
     }
 
+    @Override
+    public Student getStudentById(Long studentId) {
+        return findStudentByIdOrElseThrowException(studentId);
+    }
+
+    @Override
+    public Guardian getGuardianById(Long guardianId) {
+        return findGuardianByIdOrElseThrowException(guardianId);
+    }
+
     private Student findStudentByIdOrElseThrowException(Long studentId)
     {
         return studentRepository.findById(studentId).orElseThrow(

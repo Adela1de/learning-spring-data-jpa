@@ -7,4 +7,6 @@ public interface StudentService {
 
     Student saveStudent(Student student);
     Guardian setGuardianToStudent(Long studentId, Long guardianId);
+    Student getStudentById(Long studentId);
+    Guardian getGuardianById(Long guardianId);
 }
