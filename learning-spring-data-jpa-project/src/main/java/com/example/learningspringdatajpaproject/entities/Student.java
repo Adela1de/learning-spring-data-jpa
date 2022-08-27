@@ -1,17 +1,14 @@
 package com.example.learningspringdatajpaproject.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_student")
-@AllArgsConstructor
 @NoArgsConstructor
 public class Student implements Serializable {
 
@@ -24,5 +21,12 @@ public class Student implements Serializable {
     private String email;
     @OneToOne(mappedBy = "student")
     private Guardian guardian;
+
+    public Student(String firstName, String lastName, String email)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
 }

@@ -1,17 +1,16 @@
 package com.example.learningspringdatajpaproject.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "tb_guardian")
 @NoArgsConstructor
-@AllArgsConstructor
 public class Guardian implements Serializable {
 
     @Id
@@ -25,5 +24,13 @@ public class Guardian implements Serializable {
             name = "student_id",
             foreignKey = @ForeignKey(name = "student_student_id")
     )
+    @JsonIgnore
     private Student student;
+
+    public Guardian(String name, String email, String mobile)
+    {
+        this.name = name;
+        this.email = email;
+        this.mobile = mobile;
+    }
 }
