@@ -2,6 +2,7 @@ package com.example.learningspringdatajpaproject.services.Impl;
 
 import com.example.learningspringdatajpaproject.entities.Guardian;
 import com.example.learningspringdatajpaproject.entities.Student;
+import com.example.learningspringdatajpaproject.exceptions.GuardianAlreadyHasStudentException;
 import com.example.learningspringdatajpaproject.exceptions.ObjectNotFoundException;
 import com.example.learningspringdatajpaproject.repositories.GuardianRepository;
 import com.example.learningspringdatajpaproject.repositories.StudentRepository;
@@ -23,6 +24,10 @@ public class StudentServiceImpl implements StudentService {
     public Guardian setGuardianToStudent(Long studentId, Long guardianId) {
         var student = findStudentByIdOrElseThrowException(studentId);
         var guardian = findGuardianByIdOrElseThrowException(guardianId);
+
+        if(verifyIfGuardianAlreadyHasAStudent(guardian))
+            throw new GuardianAlreadyHasStudentException("This guardian already has a student assigned! ");
+
         guardian.setStudent(student);
         return guardianRepository.save(guardian);
     }
@@ -49,5 +54,10 @@ public class StudentServiceImpl implements StudentService {
         return guardianRepository.findById(guardianId).orElseThrow(
                 () -> new ObjectNotFoundException("Guardian not found!")
         );
+    }
+
+    private boolean verifyIfGuardianAlreadyHasAStudent(Guardian guardian) {
+        if(guardian.getStudent() != null) return true;
+        return false;
     }
 }
