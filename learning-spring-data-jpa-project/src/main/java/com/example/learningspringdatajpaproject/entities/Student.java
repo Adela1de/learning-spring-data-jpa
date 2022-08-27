@@ -21,6 +21,12 @@ public class Student implements Serializable {
     private String email;
     @OneToOne(mappedBy = "student")
     private Guardian guardian;
+    @ManyToOne
+    @JoinColumn(
+            name = "course_id",
+            foreignKey = @ForeignKey(name = "student_course_id")
+    )
+    private Course course;
 
     public Student(String firstName, String lastName, String email)
     {
