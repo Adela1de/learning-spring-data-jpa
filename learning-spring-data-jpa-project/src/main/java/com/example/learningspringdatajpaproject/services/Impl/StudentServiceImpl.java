@@ -2,11 +2,11 @@ package com.example.learningspringdatajpaproject.services.Impl;
 
 import com.example.learningspringdatajpaproject.entities.Guardian;
 import com.example.learningspringdatajpaproject.entities.Student;
+import com.example.learningspringdatajpaproject.exceptions.ObjectNotFoundException;
 import com.example.learningspringdatajpaproject.repositories.GuardianRepository;
 import com.example.learningspringdatajpaproject.repositories.StudentRepository;
 import com.example.learningspringdatajpaproject.services.StudentService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,14 +40,14 @@ public class StudentServiceImpl implements StudentService {
     private Student findStudentByIdOrElseThrowException(Long studentId)
     {
         return studentRepository.findById(studentId).orElseThrow(
-                () -> new ObjectNotFoundException(Student.class, "Student not found!")
+                () -> new ObjectNotFoundException("Student not found!")
         );
     }
 
     private Guardian findGuardianByIdOrElseThrowException(Long guardianId)
     {
         return guardianRepository.findById(guardianId).orElseThrow(
-                () -> new ObjectNotFoundException(Guardian.class, "Guardian not found!")
+                () -> new ObjectNotFoundException("Guardian not found!")
         );
     }
 }
