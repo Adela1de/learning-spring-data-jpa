@@ -224,12 +224,7 @@ public class SchoolServiceImpl implements SchoolService {
 
     private void verifyIfIsValidClass(Student student, CourseClass courseClass)
     {
-        AtomicBoolean bol = new AtomicBoolean(false);
-
-        student.getClasses().forEach((x) -> {
-            if(x.getId() == courseClass.getId()) bol.set(true);
-        });
-
-        if(!bol.get()) throw new InvalidClassException("This student is not registered in this class");
+        if(!student.getClasses().contains(courseClass))
+            throw new InvalidClassException("This student is not registered in this class");
     }
 }
