@@ -37,7 +37,7 @@ public class Course implements Serializable {
             name = "course_material_id",
             foreignKey = @ForeignKey(name = "course_course_material_id")
     )
-    private CourseMaterial courseMaterialUrl;
+    private CourseMaterial material;
 
     public Course(String title, Integer credit)
     {

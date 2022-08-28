@@ -1,9 +1,6 @@
 package com.example.learningspringdatajpaproject.services;
 
-import com.example.learningspringdatajpaproject.entities.Course;
-import com.example.learningspringdatajpaproject.entities.Guardian;
-import com.example.learningspringdatajpaproject.entities.Student;
-import com.example.learningspringdatajpaproject.entities.Teacher;
+import com.example.learningspringdatajpaproject.entities.*;
 
 public interface SchoolService {
 
@@ -15,11 +12,15 @@ public interface SchoolService {
 
     Teacher saveTeacher(Teacher teacher);
 
+    CourseMaterial saveCourseMaterial(CourseMaterial courseMaterial);
+
     Guardian assignGuardianToStudent(Long studentId, Long guardianId);
 
     Student assignStudentToACourse(Long studentId, Long courseId);
 
     Course assignTeacherToCourse(Long teacherId, Long CourseId);
+
+    Course assignCourseMaterialToCourse(Long CourseId, Long CourseMaterialId);
 
     Student getStudentById(Long studentId);
 
@@ -28,5 +29,7 @@ public interface SchoolService {
     Course getCourseById(Long courseId);
 
     Teacher getTeacherById(Long teacherId);
+
+    CourseMaterial getCourseMaterialById(Long CourseMaterialId);
 
 }

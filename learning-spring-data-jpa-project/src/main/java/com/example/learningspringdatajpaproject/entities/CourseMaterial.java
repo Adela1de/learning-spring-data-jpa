@@ -18,7 +18,7 @@ public class CourseMaterial {
     @Column(name = "id")
     private Long courseMaterialId;
     private String url;
-    @OneToOne(mappedBy = "courseMaterialUrl")
+    @OneToOne(mappedBy = "material")
     private Course course;
 
     public CourseMaterial(String url) {
