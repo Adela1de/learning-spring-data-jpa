@@ -1,8 +1,9 @@
 package com.example.learningspringdatajpaproject.controllers.Exception;
 
+import com.example.learningspringdatajpaproject.exceptions.CourseAlreadyHasTeacherException;
 import com.example.learningspringdatajpaproject.exceptions.GuardianAlreadyHasStudentException;
 import com.example.learningspringdatajpaproject.exceptions.ObjectNotFoundException;
-import com.example.learningspringdatajpaproject.exceptions.StudentIsAlreadyTakingACourse;
+import com.example.learningspringdatajpaproject.exceptions.StudentIsAlreadyTakingACourseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,9 +29,17 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
-    @ExceptionHandler(StudentIsAlreadyTakingACourse.class)
-    public ResponseEntity<StandardError> studentIsAlreadyTakingACourse(StudentIsAlreadyTakingACourse e,
-                                                                            ServletRequest s)
+    @ExceptionHandler(StudentIsAlreadyTakingACourseException.class)
+    public ResponseEntity<StandardError> studentIsAlreadyTakingACourse(StudentIsAlreadyTakingACourseException e,
+                                                                       ServletRequest s)
+    {
+        var error = new StandardError(HttpStatus.BAD_REQUEST.value(), System.currentTimeMillis(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(CourseAlreadyHasTeacherException.class)
+    public ResponseEntity<StandardError> courseAlreadyHasTeacherException(CourseAlreadyHasTeacherException e,
+                                                                       ServletRequest s)
     {
         var error = new StandardError(HttpStatus.BAD_REQUEST.value(), System.currentTimeMillis(), e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);

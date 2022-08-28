@@ -1,5 +1,6 @@
 package com.example.learningspringdatajpaproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Teacher implements Serializable {
     private String firstName;
     private String lastName;
     @OneToOne(mappedBy = "teacher")
+    @JsonIgnore
     private Course course;
 
     public Teacher(String firstName, String lastName) {

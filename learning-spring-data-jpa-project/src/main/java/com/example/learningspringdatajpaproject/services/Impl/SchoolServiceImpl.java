@@ -3,12 +3,15 @@ package com.example.learningspringdatajpaproject.services.Impl;
 import com.example.learningspringdatajpaproject.entities.Course;
 import com.example.learningspringdatajpaproject.entities.Guardian;
 import com.example.learningspringdatajpaproject.entities.Student;
+import com.example.learningspringdatajpaproject.entities.Teacher;
+import com.example.learningspringdatajpaproject.exceptions.CourseAlreadyHasTeacherException;
 import com.example.learningspringdatajpaproject.exceptions.GuardianAlreadyHasStudentException;
 import com.example.learningspringdatajpaproject.exceptions.ObjectNotFoundException;
-import com.example.learningspringdatajpaproject.exceptions.StudentIsAlreadyTakingACourse;
+import com.example.learningspringdatajpaproject.exceptions.StudentIsAlreadyTakingACourseException;
 import com.example.learningspringdatajpaproject.repositories.CourseRepository;
 import com.example.learningspringdatajpaproject.repositories.GuardianRepository;
 import com.example.learningspringdatajpaproject.repositories.StudentRepository;
+import com.example.learningspringdatajpaproject.repositories.TeacherRepository;
 import com.example.learningspringdatajpaproject.services.SchoolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,7 @@ public class SchoolServiceImpl implements SchoolService {
     private final StudentRepository studentRepository;
     private final GuardianRepository guardianRepository;
     private final CourseRepository courseRepository;
+    private final TeacherRepository teacherRepository;
 
     @Override
     public Student saveStudent(Student student) { return studentRepository.save(student); }
@@ -29,6 +33,9 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     public Course saveCourse(Course course) { return courseRepository.save(course); }
+
+    @Override
+    public Teacher saveTeacher(Teacher teacher) { return teacherRepository.save(teacher); }
 
     @Override
     public Guardian assignGuardianToStudent(Long studentId, Long guardianId) {
@@ -53,6 +60,17 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
+    public Course assignTeacherToCourse(Long teacherId, Long courseId) {
+        var teacher = findTeacherByIdOrElseThrowException(teacherId);
+        var course = findCourseByIdOrElseThrowException(courseId);
+
+        verifyCourseAlreadyHasATeacher(course);
+
+        course.setTeacher(teacher);
+        return courseRepository.save(course);
+    }
+
+    @Override
     public Student getStudentById(Long studentId) {
         return findStudentByIdOrElseThrowException(studentId);
     }
@@ -64,6 +82,9 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     public Course getCourseById(Long courseId) { return findCourseByIdOrElseThrowException(courseId); }
+
+    @Override
+    public Teacher getTeacherById(Long teacherId) { return findTeacherByIdOrElseThrowException(teacherId); }
 
     private Student findStudentByIdOrElseThrowException(Long studentId)
     {
@@ -86,6 +107,13 @@ public class SchoolServiceImpl implements SchoolService {
         );
     }
 
+    private Teacher findTeacherByIdOrElseThrowException(Long teacherId)
+    {
+        return teacherRepository.findById(teacherId).orElseThrow(
+                () -> new ObjectNotFoundException("Teacher not found!")
+        );
+    }
+
     private void verifyIfGuardianAlreadyHasAStudent(Guardian guardian) {
         if(guardian.getStudent() != null)
             throw new GuardianAlreadyHasStudentException("This guardian already has a student assigned! ");
@@ -93,6 +121,11 @@ public class SchoolServiceImpl implements SchoolService {
 
     private void verifyIfStudentIsAlreadyTakingACourse(Student student) {
         if(student.getCourse() != null)
-            throw new StudentIsAlreadyTakingACourse("This student can't change course! ");
+            throw new StudentIsAlreadyTakingACourseException("This student can't change course! ");
+    }
+
+    private void verifyCourseAlreadyHasATeacher(Course course) {
+        if(course.getTeacher() != null)
+            throw new CourseAlreadyHasTeacherException("This course already has a teacher! ");
     }
 }
