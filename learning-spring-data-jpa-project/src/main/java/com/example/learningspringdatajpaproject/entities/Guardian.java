@@ -15,6 +15,7 @@ public class Guardian implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     private String name;
     private String email;
@@ -22,7 +23,7 @@ public class Guardian implements Serializable {
     @OneToOne
     @JoinColumn(
             name = "student_id",
-            foreignKey = @ForeignKey(name = "student_student_id")
+            foreignKey = @ForeignKey(name = "guardian_student_id")
     )
     @JsonIgnore
     private Student student;

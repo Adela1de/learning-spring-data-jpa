@@ -19,12 +19,19 @@ public class Course implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long courseId;
     private String title;
     private Integer credit;
     @JsonIgnore
     @OneToMany(mappedBy = "course")
     private List<Student> students = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(
+            name = "teacher_id",
+            foreignKey = @ForeignKey(name = "course_teacher_id")
+    )
+    private Teacher teacher;
 
     public Course(String title, Integer credit)
     {
