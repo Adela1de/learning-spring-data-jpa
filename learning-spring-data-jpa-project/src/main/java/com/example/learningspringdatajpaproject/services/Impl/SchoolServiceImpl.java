@@ -19,6 +19,7 @@ public class SchoolServiceImpl implements SchoolService {
     private final TeacherRepository teacherRepository;
     private final CourseMaterialRepository courseMaterialRepository;
     private final CourseClassRepository courseClassRepository;
+    private final CourseClassStudentGradeRepository courseClassStudentGradeRepository;
 
     @Override
     public Student saveStudent(Student student) { return studentRepository.save(student); }
@@ -104,6 +105,20 @@ public class SchoolServiceImpl implements SchoolService {
         courseClass.getStudents().add(student);
 
         return courseClassRepository.save(courseClass);
+    }
+
+    @Override
+    public Student assignGradeToClass(Long studentId, Long courseClassId, CourseClassStudentGrade grade) {
+        var student = findStudentByIdOrElseThrowException(studentId);
+        var courseClass = findCourseClassByIdOrElseThrowException(courseClassId);
+
+        verifyIfIsValidClass(student, courseClass);
+
+        grade.getStudentsGrade().add(student);
+        grade.getClasses().add(courseClass);
+        courseClassStudentGradeRepository.save(grade);
+
+        return student;
     }
 
     @Override
@@ -204,6 +219,17 @@ public class SchoolServiceImpl implements SchoolService {
             if(x.getCourseId() == student.getCourse().getCourseId()) bol.set(true);
         });
 
-        if(!bol.get()) throw new InvalidClassException("this class does not belong to this student's grade! ");
+        if(!bol.get()) throw new InvalidClassException("this class does not belong to this student's grade!");
+    }
+
+    private void verifyIfIsValidClass(Student student, CourseClass courseClass)
+    {
+        AtomicBoolean bol = new AtomicBoolean(false);
+
+        student.getClasses().forEach((x) -> {
+            if(x.getId() == courseClass.getId()) bol.set(true);
+        });
+
+        if(!bol.get()) throw new InvalidClassException("This student is not registered in this class");
     }
 }

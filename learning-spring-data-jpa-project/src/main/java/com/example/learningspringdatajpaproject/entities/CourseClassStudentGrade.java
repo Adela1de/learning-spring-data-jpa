@@ -25,7 +25,6 @@ public class CourseClassStudentGrade {
             joinColumns = @JoinColumn(name = "course_class_student_grade_id"),
             inverseJoinColumns = @JoinColumn(name = "course_class_id")
     )
-    @JsonIgnore
     private List<CourseClass> classes = new ArrayList<>();
     @ManyToMany
     @JoinTable(

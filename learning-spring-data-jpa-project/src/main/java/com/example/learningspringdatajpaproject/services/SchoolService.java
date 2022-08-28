@@ -28,6 +28,8 @@ public interface SchoolService {
 
     CourseClass assignStudentToCourseClass(Long studentId, Long courseClassId);
 
+    Student assignGradeToClass(Long studentId, Long courseClassId, CourseClassStudentGrade grade);
+
     Student getStudentById(Long studentId);
 
     Guardian getGuardianById(Long guardianId);
