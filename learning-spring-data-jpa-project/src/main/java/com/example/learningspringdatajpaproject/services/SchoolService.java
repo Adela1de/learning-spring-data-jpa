@@ -14,13 +14,17 @@ public interface SchoolService {
 
     CourseMaterial saveCourseMaterial(CourseMaterial courseMaterial);
 
+    CourseClass saveCourseClass(CourseClass courseClass);
+
     Guardian assignGuardianToStudent(Long studentId, Long guardianId);
 
     Student assignStudentToACourse(Long studentId, Long courseId);
 
-    Course assignTeacherToCourse(Long teacherId, Long CourseId);
+    Course assignTeacherToCourse(Long teacherId, Long courseId);
 
-    Course assignCourseMaterialToCourse(Long CourseId, Long CourseMaterialId);
+    Course assignCourseMaterialToCourse(Long courseId, Long courseMaterialId);
+
+    CourseClass assignCourseClassToCourse(Long courseId, Long courseClassId);
 
     Student getStudentById(Long studentId);
 
@@ -30,6 +34,8 @@ public interface SchoolService {
 
     Teacher getTeacherById(Long teacherId);
 
-    CourseMaterial getCourseMaterialById(Long CourseMaterialId);
+    CourseMaterial getCourseMaterialById(Long courseMaterialId);
+
+    CourseClass getCourseClassById(Long courseClassId);
 
 }

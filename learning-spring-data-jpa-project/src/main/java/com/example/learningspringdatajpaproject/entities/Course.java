@@ -36,6 +36,7 @@ public class Course implements Serializable {
     )
     private CourseMaterial material;
     @ManyToMany(mappedBy = "courses")
+    @JsonIgnore
     private List<CourseClass> classes = new ArrayList<>();
 
     public Course(String title)

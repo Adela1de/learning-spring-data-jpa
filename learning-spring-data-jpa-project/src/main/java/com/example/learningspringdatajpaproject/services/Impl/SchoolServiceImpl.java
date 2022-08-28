@@ -19,6 +19,7 @@ public class SchoolServiceImpl implements SchoolService {
     private final CourseRepository courseRepository;
     private final TeacherRepository teacherRepository;
     private final CourseMaterialRepository courseMaterialRepository;
+    private final CourseClassRepository courseClassRepository;
 
     @Override
     public Student saveStudent(Student student) { return studentRepository.save(student); }
@@ -37,6 +38,9 @@ public class SchoolServiceImpl implements SchoolService {
     {
         return courseMaterialRepository.save(courseMaterial);
     }
+
+    @Override
+    public CourseClass saveCourseClass(CourseClass courseClass) { return courseClassRepository.save(courseClass); }
 
     @Override
     public Guardian assignGuardianToStudent(Long studentId, Long guardianId) {
@@ -83,6 +87,15 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
+    public CourseClass assignCourseClassToCourse(Long courseId, Long courseClassId) {
+        var course = findCourseByIdOrElseThrowException(courseId);
+        var courseClass = findCourseClassByIdOrElseThrowException(courseClassId);
+
+        courseClass.getCourses().add(course);
+        return courseClassRepository.save(courseClass);
+    }
+
+    @Override
     public Student getStudentById(Long studentId) {
         return findStudentByIdOrElseThrowException(studentId);
     }
@@ -99,8 +112,15 @@ public class SchoolServiceImpl implements SchoolService {
     public Teacher getTeacherById(Long teacherId) { return findTeacherByIdOrElseThrowException(teacherId); }
 
     @Override
-    public CourseMaterial getCourseMaterialById(Long courseMaterialId) {
+    public CourseMaterial getCourseMaterialById(Long courseMaterialId)
+    {
         return findCourseMaterialByIdOrElseThrowException(courseMaterialId);
+    }
+
+    @Override
+    public CourseClass getCourseClassById(Long courseClassId)
+    {
+        return findCourseClassByIdOrElseThrowException(courseClassId);
     }
 
     private Student findStudentByIdOrElseThrowException(Long studentId)
@@ -135,6 +155,13 @@ public class SchoolServiceImpl implements SchoolService {
     {
         return courseMaterialRepository.findById(courseMaterialId).orElseThrow(
                 () -> new ObjectNotFoundException("Course material not found!")
+        );
+    }
+
+    private CourseClass findCourseClassByIdOrElseThrowException(Long courseClassId)
+    {
+        return courseClassRepository.findById(courseClassId).orElseThrow(
+                () -> new ObjectNotFoundException("Class not found not found!")
         );
     }
 

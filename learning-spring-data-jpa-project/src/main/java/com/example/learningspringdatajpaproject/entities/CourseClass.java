@@ -18,7 +18,6 @@ public class CourseClass {
     @Column(name = "id")
     private Long id;
     private String title;
-    private Integer studentScore;
     private Integer credit;
     @ManyToMany
     @JoinTable(
@@ -37,9 +36,8 @@ public class CourseClass {
     @ManyToMany(mappedBy = "classes")
     private List<CourseClassStudentGrade> courseClassStudentGrades = new ArrayList<>();
 
-    public CourseClass(String title, Integer studentScore, Integer credit) {
+    public CourseClass(String title, Integer credit) {
         this.title = title;
-        this.studentScore = studentScore;
         this.credit = credit;
     }
 }

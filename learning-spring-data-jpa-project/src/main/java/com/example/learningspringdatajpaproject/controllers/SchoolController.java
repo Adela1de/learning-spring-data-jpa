@@ -38,10 +38,16 @@ public class SchoolController {
         return ResponseEntity.ok().body(schoolService.getTeacherById(teacherId));
     }
 
-    @GetMapping("/CourseMaterial/{courseMaterialId}")
+    @GetMapping("/courseMaterial/{courseMaterialId}")
     public ResponseEntity<CourseMaterial> getCourseMaterialById(@PathVariable("courseMaterialId") Long courseMaterialId)
     {
         return ResponseEntity.ok().body(schoolService.getCourseMaterialById(courseMaterialId));
+    }
+
+    @GetMapping("/courseClass/{courseClassId}")
+    public ResponseEntity<CourseClass> getCourseClassById(@PathVariable("courseClassId") Long courseClassId)
+    {
+        return ResponseEntity.ok().body(schoolService.getCourseClassById(courseClassId));
     }
 
     @PostMapping("/student/new")
@@ -69,9 +75,15 @@ public class SchoolController {
     }
 
     @PostMapping("/courseMaterial/new")
-    public ResponseEntity<CourseMaterial> addTeacher(@RequestBody CourseMaterial courseMaterial)
+    public ResponseEntity<CourseMaterial> addCourseMaterial(@RequestBody CourseMaterial courseMaterial)
     {
         return ResponseEntity.ok().body(schoolService.saveCourseMaterial(courseMaterial));
+    }
+
+    @PostMapping("/courseClass/new")
+    public ResponseEntity<CourseClass> addCourseClass(@RequestBody CourseClass courseClass)
+    {
+        return ResponseEntity.ok().body(schoolService.saveCourseClass(courseClass));
     }
 
     @PostMapping("/guardian/set/{studentId}/{guardianId}")
@@ -100,5 +112,12 @@ public class SchoolController {
                                                             @PathVariable("courseMaterialId") Long courseMaterial)
     {
         return ResponseEntity.ok().body(schoolService.assignCourseMaterialToCourse(courseId, courseMaterial));
+    }
+
+    @PostMapping("/course/courseMaterial/set/{courseId}/{courseClass}")
+    public ResponseEntity<CourseClass> setCourseClassToCourse(@PathVariable("courseId") Long courseId,
+                                                            @PathVariable("courseClass") Long courseClass)
+    {
+        return ResponseEntity.ok().body(schoolService.assignCourseClassToCourse(courseId, courseClass));
     }
 }
