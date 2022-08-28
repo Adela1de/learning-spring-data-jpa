@@ -1,5 +1,6 @@
 package com.example.learningspringdatajpaproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ public class CourseMaterial {
     private Long courseMaterialId;
     private String url;
     @OneToOne(mappedBy = "material")
+    @JsonIgnore
     private Course course;
 
     public CourseMaterial(String url) {

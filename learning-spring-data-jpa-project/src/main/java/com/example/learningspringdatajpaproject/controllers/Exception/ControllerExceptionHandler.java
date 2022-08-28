@@ -1,9 +1,6 @@
 package com.example.learningspringdatajpaproject.controllers.Exception;
 
-import com.example.learningspringdatajpaproject.exceptions.CourseAlreadyHasTeacherException;
-import com.example.learningspringdatajpaproject.exceptions.GuardianAlreadyHasStudentException;
-import com.example.learningspringdatajpaproject.exceptions.ObjectNotFoundException;
-import com.example.learningspringdatajpaproject.exceptions.StudentIsAlreadyTakingACourseException;
+import com.example.learningspringdatajpaproject.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -40,6 +37,14 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(CourseAlreadyHasTeacherException.class)
     public ResponseEntity<StandardError> courseAlreadyHasTeacherException(CourseAlreadyHasTeacherException e,
                                                                        ServletRequest s)
+    {
+        var error = new StandardError(HttpStatus.BAD_REQUEST.value(), System.currentTimeMillis(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(InvalidClassException.class)
+    public ResponseEntity<StandardError> invalidClassException(InvalidClassException e,
+                                                               ServletRequest s)
     {
         var error = new StandardError(HttpStatus.BAD_REQUEST.value(), System.currentTimeMillis(), e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);

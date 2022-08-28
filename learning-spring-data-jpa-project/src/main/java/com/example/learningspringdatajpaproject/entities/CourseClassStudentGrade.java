@@ -1,5 +1,6 @@
 package com.example.learningspringdatajpaproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,7 @@ public class CourseClassStudentGrade {
             joinColumns = @JoinColumn(name = "course_class_student_grade_id"),
             inverseJoinColumns = @JoinColumn(name = "course_class_id")
     )
+    @JsonIgnore
     private List<CourseClass> classes = new ArrayList<>();
     @ManyToMany
     @JoinTable(
@@ -31,6 +33,7 @@ public class CourseClassStudentGrade {
             joinColumns = @JoinColumn(name = "course_class_student_grade_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
+    @JsonIgnore
     private List<Student> studentsGrade = new ArrayList<>();
 
     public CourseClassStudentGrade(Double studentGrade) {

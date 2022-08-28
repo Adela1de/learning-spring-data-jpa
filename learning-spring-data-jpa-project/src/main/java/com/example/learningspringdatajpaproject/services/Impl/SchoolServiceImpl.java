@@ -1,14 +1,13 @@
 package com.example.learningspringdatajpaproject.services.Impl;
 
 import com.example.learningspringdatajpaproject.entities.*;
-import com.example.learningspringdatajpaproject.exceptions.CourseAlreadyHasTeacherException;
-import com.example.learningspringdatajpaproject.exceptions.GuardianAlreadyHasStudentException;
-import com.example.learningspringdatajpaproject.exceptions.ObjectNotFoundException;
-import com.example.learningspringdatajpaproject.exceptions.StudentIsAlreadyTakingACourseException;
+import com.example.learningspringdatajpaproject.exceptions.*;
 import com.example.learningspringdatajpaproject.repositories.*;
 import com.example.learningspringdatajpaproject.services.SchoolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @RequiredArgsConstructor
@@ -92,6 +91,18 @@ public class SchoolServiceImpl implements SchoolService {
         var courseClass = findCourseClassByIdOrElseThrowException(courseClassId);
 
         courseClass.getCourses().add(course);
+        return courseClassRepository.save(courseClass);
+    }
+
+    @Override
+    public CourseClass assignStudentToCourseClass(Long studentId, Long courseClassId) {
+        var student = findStudentByIdOrElseThrowException(studentId);
+        var courseClass = findCourseClassByIdOrElseThrowException(courseClassId);
+
+        verifyIfCanAssignClassToStudent(student, courseClass);
+
+        courseClass.getStudents().add(student);
+
         return courseClassRepository.save(courseClass);
     }
 
@@ -183,5 +194,16 @@ public class SchoolServiceImpl implements SchoolService {
     private void verifyCourseAlreadyHasMaterial(Course course) {
         if(course.getMaterial() != null)
             throw new CourseAlreadyHasTeacherException("This course already has material for it! ");
+    }
+
+    private void verifyIfCanAssignClassToStudent(Student student, CourseClass courseClass)
+    {
+        AtomicBoolean bol = new AtomicBoolean(false);
+
+        courseClass.getCourses().forEach((x) -> {
+            if(x.getCourseId() == student.getCourse().getCourseId()) bol.set(true);
+        });
+
+        if(!bol.get()) throw new InvalidClassException("this class does not belong to this student's grade! ");
     }
 }
