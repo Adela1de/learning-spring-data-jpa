@@ -42,7 +42,7 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public Student assignStudentToAStudent(Long studentId, Long courseId) {
+    public Student assignStudentToACourse(Long studentId, Long courseId) {
         var student = findStudentByIdOrElseThrowException(studentId);
         var course = findCourseByIdOrElseThrowException(courseId);
 

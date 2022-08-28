@@ -14,7 +14,7 @@ public interface SchoolService {
 
     Guardian assignGuardianToStudent(Long studentId, Long guardianId);
 
-    Student assignStudentToAStudent(Long studentId, Long courseId);
+    Student assignStudentToACourse(Long studentId, Long courseId);
 
     Student getStudentById(Long studentId);
 
