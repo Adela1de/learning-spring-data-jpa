@@ -1,9 +1,6 @@
 package com.example.learningspringdatajpaproject.controllers;
 
-import com.example.learningspringdatajpaproject.entities.Course;
-import com.example.learningspringdatajpaproject.entities.Guardian;
-import com.example.learningspringdatajpaproject.entities.Student;
-import com.example.learningspringdatajpaproject.entities.Teacher;
+import com.example.learningspringdatajpaproject.entities.*;
 import com.example.learningspringdatajpaproject.services.SchoolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +38,12 @@ public class SchoolController {
         return ResponseEntity.ok().body(schoolService.getTeacherById(teacherId));
     }
 
+    @GetMapping("/CourseMaterial/{courseMaterialId}")
+    public ResponseEntity<CourseMaterial> getCourseMaterialById(@PathVariable("courseMaterialId") Long courseMaterialId)
+    {
+        return ResponseEntity.ok().body(schoolService.getCourseMaterialById(courseMaterialId));
+    }
+
     @PostMapping("/student/new")
     public ResponseEntity<Student> addStudent(@RequestBody Student student)
     {
@@ -65,6 +68,12 @@ public class SchoolController {
         return ResponseEntity.ok().body(schoolService.saveTeacher(teacher));
     }
 
+    @PostMapping("/courseMaterial/new")
+    public ResponseEntity<CourseMaterial> addTeacher(@RequestBody CourseMaterial courseMaterial)
+    {
+        return ResponseEntity.ok().body(schoolService.saveCourseMaterial(courseMaterial));
+    }
+
     @PostMapping("/guardian/set/{studentId}/{guardianId}")
     public ResponseEntity<Guardian> setGuardianToStudent(@PathVariable("studentId") Long studentId,
                                                          @PathVariable("guardianId") Long guardianId)
@@ -84,5 +93,12 @@ public class SchoolController {
                                                       @PathVariable("courseId") Long courseId)
     {
         return ResponseEntity.ok().body(schoolService.assignTeacherToCourse(teacherId, courseId));
+    }
+
+    @PostMapping("/course/courseMaterial/set/{courseId}/{courseMaterialId}")
+    public ResponseEntity<Course> setCourseMaterialToCourse(@PathVariable("courseId") Long courseId,
+                                                            @PathVariable("courseMaterialId") Long courseMaterial)
+    {
+        return ResponseEntity.ok().body(schoolService.assignCourseMaterialToCourse(courseId, courseMaterial));
     }
 }

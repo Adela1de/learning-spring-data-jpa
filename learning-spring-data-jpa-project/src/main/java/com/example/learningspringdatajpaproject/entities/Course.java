@@ -22,7 +22,6 @@ public class Course implements Serializable {
     @Column(name = "id")
     private Long courseId;
     private String title;
-    private Integer credit;
     @JsonIgnore
     @OneToMany(mappedBy = "course")
     private List<Student> students = new ArrayList<>();
@@ -38,10 +37,11 @@ public class Course implements Serializable {
             foreignKey = @ForeignKey(name = "course_course_material_id")
     )
     private CourseMaterial material;
+    @ManyToMany(mappedBy = "courses")
+    private List<CourseClass> classes = new ArrayList<>();
 
-    public Course(String title, Integer credit)
+    public Course(String title)
     {
         this.title = title;
-        this.credit = credit;
     }
 }

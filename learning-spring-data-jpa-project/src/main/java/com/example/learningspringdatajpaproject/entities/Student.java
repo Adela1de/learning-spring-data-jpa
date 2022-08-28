@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +30,8 @@ public class Student implements Serializable {
             foreignKey = @ForeignKey(name = "student_course_id")
     )
     private Course course;
+    @ManyToMany(mappedBy = "students")
+    private List<CourseClass> classes = new ArrayList<>();
 
     public Student(String firstName, String lastName, String email)
     {
