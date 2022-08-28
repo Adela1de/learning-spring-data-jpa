@@ -32,6 +32,12 @@ public class Course implements Serializable {
             foreignKey = @ForeignKey(name = "course_teacher_id")
     )
     private Teacher teacher;
+    @OneToOne
+    @JoinColumn(
+            name = "course_material_id",
+            foreignKey = @ForeignKey(name = "course_course_material_id")
+    )
+    private CourseMaterial courseMaterialUrl;
 
     public Course(String title, Integer credit)
     {
