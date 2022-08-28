@@ -2,6 +2,7 @@ package com.example.learningspringdatajpaproject.controllers.Exception;
 
 import com.example.learningspringdatajpaproject.exceptions.GuardianAlreadyHasStudentException;
 import com.example.learningspringdatajpaproject.exceptions.ObjectNotFoundException;
+import com.example.learningspringdatajpaproject.exceptions.StudentIsAlreadyTakingACourse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,6 +22,14 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(GuardianAlreadyHasStudentException.class)
     public ResponseEntity<StandardError> guardianAlreadyHasStudentException(GuardianAlreadyHasStudentException e,
+                                                                            ServletRequest s)
+    {
+        var error = new StandardError(HttpStatus.BAD_REQUEST.value(), System.currentTimeMillis(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(StudentIsAlreadyTakingACourse.class)
+    public ResponseEntity<StandardError> studentIsAlreadyTakingACourse(StudentIsAlreadyTakingACourse e,
                                                                             ServletRequest s)
     {
         var error = new StandardError(HttpStatus.BAD_REQUEST.value(), System.currentTimeMillis(), e.getMessage());

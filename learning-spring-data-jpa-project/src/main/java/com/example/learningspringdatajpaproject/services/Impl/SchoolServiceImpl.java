@@ -5,6 +5,7 @@ import com.example.learningspringdatajpaproject.entities.Guardian;
 import com.example.learningspringdatajpaproject.entities.Student;
 import com.example.learningspringdatajpaproject.exceptions.GuardianAlreadyHasStudentException;
 import com.example.learningspringdatajpaproject.exceptions.ObjectNotFoundException;
+import com.example.learningspringdatajpaproject.exceptions.StudentIsAlreadyTakingACourse;
 import com.example.learningspringdatajpaproject.repositories.CourseRepository;
 import com.example.learningspringdatajpaproject.repositories.GuardianRepository;
 import com.example.learningspringdatajpaproject.repositories.StudentRepository;
@@ -34,8 +35,7 @@ public class SchoolServiceImpl implements SchoolService {
         var student = findStudentByIdOrElseThrowException(studentId);
         var guardian = findGuardianByIdOrElseThrowException(guardianId);
 
-        if(verifyIfGuardianAlreadyHasAStudent(guardian))
-            throw new GuardianAlreadyHasStudentException("This guardian already has a student assigned! ");
+        verifyIfGuardianAlreadyHasAStudent(guardian);
 
         guardian.setStudent(student);
         return guardianRepository.save(guardian);
@@ -43,7 +43,13 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     public Student assignStudentToAStudent(Long studentId, Long courseId) {
-        return null;
+        var student = findStudentByIdOrElseThrowException(studentId);
+        var course = findCourseByIdOrElseThrowException(courseId);
+
+        verifyIfStudentIsAlreadyTakingACourse(student);
+
+        student.setCourse(course);
+        return studentRepository.save(student);
     }
 
     @Override
@@ -57,9 +63,7 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public Course getCourseById(Long CourseId) {
-        return null;
-    }
+    public Course getCourseById(Long courseId) { return findCourseByIdOrElseThrowException(courseId); }
 
     private Student findStudentByIdOrElseThrowException(Long studentId)
     {
@@ -75,8 +79,20 @@ public class SchoolServiceImpl implements SchoolService {
         );
     }
 
-    private boolean verifyIfGuardianAlreadyHasAStudent(Guardian guardian) {
-        if(guardian.getStudent() != null) return true;
-        return false;
+    private Course findCourseByIdOrElseThrowException(Long courseId)
+    {
+        return courseRepository.findById(courseId).orElseThrow(
+                () -> new ObjectNotFoundException("Course not found!")
+        );
+    }
+
+    private void verifyIfGuardianAlreadyHasAStudent(Guardian guardian) {
+        if(guardian.getStudent() != null)
+            throw new GuardianAlreadyHasStudentException("This guardian already has a student assigned! ");
+    }
+
+    private void verifyIfStudentIsAlreadyTakingACourse(Student student) {
+        if(student.getCourse() != null)
+            throw new StudentIsAlreadyTakingACourse("This student can't change course! ");
     }
 }
