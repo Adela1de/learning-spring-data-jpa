@@ -1,13 +1,13 @@
 package com.example.learningspringdatajpaproject.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "tb_guardian")
 @NoArgsConstructor

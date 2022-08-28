@@ -1,15 +1,13 @@
 package com.example.learningspringdatajpaproject.entities;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "tb_course_class")
 @NoArgsConstructor
@@ -36,6 +34,8 @@ public class CourseClass {
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
     private List<Student> students = new ArrayList<>();
+    @ManyToMany(mappedBy = "classes")
+    private List<CourseClassStudentGrade> courseClassStudentGrades = new ArrayList<>();
 
     public CourseClass(String title, Integer studentScore, Integer credit) {
         this.title = title;

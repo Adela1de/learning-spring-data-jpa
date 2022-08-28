@@ -1,14 +1,14 @@
 package com.example.learningspringdatajpaproject.entities;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "tb_student")
 @NoArgsConstructor
@@ -32,6 +32,8 @@ public class Student implements Serializable {
     private Course course;
     @ManyToMany(mappedBy = "students")
     private List<CourseClass> classes = new ArrayList<>();
+    @ManyToMany(mappedBy = "studentsGrade")
+    private List<CourseClassStudentGrade> courseClassStudentGrades  = new ArrayList<>();
 
     public Student(String firstName, String lastName, String email)
     {

@@ -1,13 +1,11 @@
 package com.example.learningspringdatajpaproject.entities;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "tb_course_material")
 @NoArgsConstructor
