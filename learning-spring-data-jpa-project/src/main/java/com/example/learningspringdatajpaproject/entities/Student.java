@@ -20,6 +20,7 @@ public class Student implements Serializable {
     private Long studentId;
     private String firstName;
     private String lastName;
+    private String password;
     @Column(name = "email_address")
     private String email;
     @OneToOne(mappedBy = "student")
@@ -35,11 +36,12 @@ public class Student implements Serializable {
     @ManyToMany(mappedBy = "studentsGrade")
     private List<CourseClassStudentGrade> courseClassStudentGrades  = new ArrayList<>();
 
-    public Student(String firstName, String lastName, String email)
+    public Student(String firstName, String lastName, String email, String password)
     {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
     }
 
 }

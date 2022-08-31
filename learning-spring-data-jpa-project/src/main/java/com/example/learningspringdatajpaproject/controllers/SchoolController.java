@@ -1,6 +1,7 @@
 package com.example.learningspringdatajpaproject.controllers;
 
 import com.example.learningspringdatajpaproject.entities.*;
+import com.example.learningspringdatajpaproject.requests.StudentLogInRequestBody;
 import com.example.learningspringdatajpaproject.services.SchoolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -134,6 +135,14 @@ public class SchoolController {
                                                            @RequestBody CourseClassStudentGrade grade)
     {
         return ResponseEntity.ok().body(schoolService.assignGradeToClass(StudentId, courseClassId, grade));
+    }
+
+    @PostMapping("/student/login")
+    public ResponseEntity<Student> studentLogIng(@RequestBody StudentLogInRequestBody studentLogInRequestBody)
+    {
+        return ResponseEntity.ok().body(schoolService.getStudentByEmailAndPassword(
+                studentLogInRequestBody.getEmail(), studentLogInRequestBody.getPassword())
+        );
     }
 
 }

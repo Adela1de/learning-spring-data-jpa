@@ -149,6 +149,16 @@ public class SchoolServiceImpl implements SchoolService {
         return findCourseClassByIdOrElseThrowException(courseClassId);
     }
 
+    @Override
+    public Student getStudentByEmailAndPassword(String studentEmail, String studentPassword) {
+        var student = findStudentByEmailOrElseThrowException(studentEmail);
+
+        if(!student.getPassword().equals(studentPassword))
+            throw new WrongEmailOrPasswordException("Wrong e-mail or password!");
+
+        return student;
+    }
+
     private Student findStudentByIdOrElseThrowException(Long studentId)
     {
         return studentRepository.findById(studentId).orElseThrow(
@@ -188,6 +198,13 @@ public class SchoolServiceImpl implements SchoolService {
     {
         return courseClassRepository.findById(courseClassId).orElseThrow(
                 () -> new ObjectNotFoundException("Class not found not found!")
+        );
+    }
+
+    private Student findStudentByEmailOrElseThrowException(String studentEmail)
+    {
+        return studentRepository.findByEmail(studentEmail).orElseThrow(
+                () -> new WrongEmailOrPasswordException("Wrong e-mail or password!")
         );
     }
 

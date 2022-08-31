@@ -42,4 +42,6 @@ public interface SchoolService {
 
     CourseClass getCourseClassById(Long courseClassId);
 
+    Student getStudentByEmailAndPassword(String studentEmail, String studentPassword);
+
 }

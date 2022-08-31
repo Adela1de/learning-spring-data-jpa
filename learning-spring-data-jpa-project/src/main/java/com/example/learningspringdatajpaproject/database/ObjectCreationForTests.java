@@ -24,11 +24,11 @@ public class ObjectCreationForTests {
 
     public void databaseInit()
     {
-        var s1 = new Student("testname1", "testlastname1", "testeemail1@gmail.com");
-        var s2 = new Student("testname2", "testlastname2", "testeemail2@gmail.com");
-        var s3 = new Student("testname3", "testlastname3", "testeemail3@gmail.com");
-        var s4 = new Student("testname4", "testlastname4", "testeemail4@gmail.com");
-        var s5 = new Student("testname5", "testlastname5", "testeemail5@gmail.com");
+        var s1 = new Student("testname1", "testlastname1", "testeemail1@gmail.com", "00000000");
+        var s2 = new Student("testname2", "testlastname2", "testeemail2@gmail.com", "00000000");
+        var s3 = new Student("testname3", "testlastname3", "testeemail3@gmail.com", "00000000");
+        var s4 = new Student("testname4", "testlastname4", "testeemail4@gmail.com", "00000000");
+        var s5 = new Student("testname5", "testlastname5", "testeemail5@gmail.com", "00000000");
 
         var g1 = new Guardian("name1", "mailguardian1@gmail.com","000000000");
         var g2 = new Guardian("name2", "mailguardian2@gmail.com","000000000");
