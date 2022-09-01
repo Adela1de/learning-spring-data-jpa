@@ -7,6 +7,7 @@ import com.example.learningspringdatajpaproject.services.SchoolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
@@ -157,6 +158,11 @@ public class SchoolServiceImpl implements SchoolService {
             throw new WrongEmailOrPasswordException("Wrong e-mail or password!");
 
         return student;
+    }
+
+    @Override
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
     }
 
     private Student findStudentByIdOrElseThrowException(Long studentId)

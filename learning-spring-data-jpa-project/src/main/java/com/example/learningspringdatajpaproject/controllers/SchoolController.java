@@ -1,11 +1,16 @@
 package com.example.learningspringdatajpaproject.controllers;
 
+import com.example.learningspringdatajpaproject.dtos.CourseDTO;
 import com.example.learningspringdatajpaproject.entities.*;
+import com.example.learningspringdatajpaproject.mappers.CourseMapper;
 import com.example.learningspringdatajpaproject.requests.StudentLogInRequestBody;
 import com.example.learningspringdatajpaproject.services.SchoolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class SchoolController {
 
     private final SchoolService schoolService;
+    private final CourseMapper courseMapper;
 
     @GetMapping("/student/{studentId}")
     public ResponseEntity<Student> getStudentById(@PathVariable("studentId") Long studentId)
@@ -28,9 +34,11 @@ public class SchoolController {
     }
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<Course> getCourseById(@PathVariable("courseId") Long courseId)
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable("courseId") Long courseId)
     {
-        return ResponseEntity.ok().body(schoolService.getCourseById(courseId));
+        var course = schoolService.getCourseById(courseId);
+        var courseDTO = courseMapper.toCourseDTOCustomized(course);
+        return ResponseEntity.ok().body(courseDTO);
     }
 
     @GetMapping("/teacher/{teacherId}")
@@ -49,6 +57,16 @@ public class SchoolController {
     public ResponseEntity<CourseClass> getCourseClassById(@PathVariable("courseClassId") Long courseClassId)
     {
         return ResponseEntity.ok().body(schoolService.getCourseClassById(courseClassId));
+    }
+
+    @GetMapping("/courses")
+    public ResponseEntity<List<CourseDTO>> getAllCourses()
+    {
+        var courses = schoolService.getAllCourses();
+        var coursesDTO = courses.stream().map
+                (courseMapper::toCourseDTOCustomized).collect(Collectors.toList()
+        );
+        return ResponseEntity.ok().body(coursesDTO);
     }
 
     @PostMapping("/student/new")

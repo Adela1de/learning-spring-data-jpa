@@ -2,6 +2,8 @@ package com.example.learningspringdatajpaproject.services;
 
 import com.example.learningspringdatajpaproject.entities.*;
 
+import java.util.List;
+
 public interface SchoolService {
 
     Student saveStudent(Student student);
@@ -43,5 +45,7 @@ public interface SchoolService {
     CourseClass getCourseClassById(Long courseClassId);
 
     Student getStudentByEmailAndPassword(String studentEmail, String studentPassword);
+
+    List<Course> getAllCourses();
 
 }
