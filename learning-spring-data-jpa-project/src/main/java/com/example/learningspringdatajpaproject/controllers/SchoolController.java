@@ -1,8 +1,10 @@
 package com.example.learningspringdatajpaproject.controllers;
 
 import com.example.learningspringdatajpaproject.dtos.CourseDTO;
+import com.example.learningspringdatajpaproject.dtos.StudentDTO;
 import com.example.learningspringdatajpaproject.entities.*;
 import com.example.learningspringdatajpaproject.mappers.CourseMapper;
+import com.example.learningspringdatajpaproject.mappers.StudentMapper;
 import com.example.learningspringdatajpaproject.requests.StudentLogInRequestBody;
 import com.example.learningspringdatajpaproject.services.SchoolService;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +22,14 @@ public class SchoolController {
 
     private final SchoolService schoolService;
     private final CourseMapper courseMapper;
+    private final StudentMapper studentMapper;
 
     @GetMapping("/student/{studentId}")
-    public ResponseEntity<Student> getStudentById(@PathVariable("studentId") Long studentId)
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable("studentId") Long studentId)
     {
-        return ResponseEntity.ok().body(schoolService.getStudentById(studentId));
+        var student = schoolService.getStudentById(studentId);
+        var studentDTO = studentMapper.toCourseDTOCustomized(student);
+        return ResponseEntity.ok().body(studentDTO);
     }
 
     @GetMapping("/guardian/{guardianId}")
@@ -112,7 +117,7 @@ public class SchoolController {
         return ResponseEntity.ok().body(schoolService.assignGuardianToStudent(studentId, guardianId));
     }
 
-    @PostMapping("/course/set/{studentId}/{courseId}")
+    @PostMapping("/course/student/set/{studentId}/{courseId}")
     public ResponseEntity<Student> setStudentToCourse(@PathVariable("studentId") Long studentId,
                                                       @PathVariable("courseId") Long courseId)
     {

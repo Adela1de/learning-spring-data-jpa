@@ -35,7 +35,5 @@ public class CourseClassStudentGrade {
     @JsonIgnore
     private List<Student> studentsGrade = new ArrayList<>();
 
-    public CourseClassStudentGrade(Double studentGrade) {
-        this.studentGrade = studentGrade;
-    }
+    public CourseClassStudentGrade(Double studentGrade) { this.studentGrade = studentGrade; }
 }
