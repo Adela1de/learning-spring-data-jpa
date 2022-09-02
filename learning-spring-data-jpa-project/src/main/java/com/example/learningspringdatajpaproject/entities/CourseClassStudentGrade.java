@@ -17,7 +17,7 @@ public class CourseClassStudentGrade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long courseClassStudentGradeId;
     private Double studentGrade;
     @ManyToMany
     @JoinTable(

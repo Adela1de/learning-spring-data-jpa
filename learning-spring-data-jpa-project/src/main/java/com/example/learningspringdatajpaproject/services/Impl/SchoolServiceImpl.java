@@ -165,6 +165,12 @@ public class SchoolServiceImpl implements SchoolService {
         return courseRepository.findAll();
     }
 
+    @Override
+    public List<CourseClass> getAllCourseClassesInACourseByTitle(String courseTitle) {
+        var course = findCourseByTitleOrElseThrowException(courseTitle);
+        return course.getClasses();
+    }
+
     private Student findStudentByIdOrElseThrowException(Long studentId)
     {
         return studentRepository.findById(studentId).orElseThrow(
@@ -211,6 +217,13 @@ public class SchoolServiceImpl implements SchoolService {
     {
         return studentRepository.findByEmail(studentEmail).orElseThrow(
                 () -> new WrongEmailOrPasswordException("Wrong e-mail or password!")
+        );
+    }
+
+    private Course findCourseByTitleOrElseThrowException(String courseTitle)
+    {
+        return courseRepository.findByTitle(courseTitle).orElseThrow(
+                () -> new ObjectNotFoundException("Course not Found!")
         );
     }
 

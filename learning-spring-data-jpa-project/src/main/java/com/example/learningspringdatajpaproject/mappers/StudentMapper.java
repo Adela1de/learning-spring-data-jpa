@@ -28,6 +28,9 @@ public class StudentMapper {
         studentDTO.setEmail(student.getEmail());
         studentDTO.setPassword(student.getPassword());
         if(student.getCourse() != null) studentDTO.setCourseTitle(student.getCourse().getTitle());
+        if(student.getClasses() != null) studentDTO.setCourseClasses(student.getClasses());
+        if(student.getCourseClassStudentGrades() != null) studentDTO.setGrades(student.getCourseClassStudentGrades());
+
         return studentDTO;
     }
 }

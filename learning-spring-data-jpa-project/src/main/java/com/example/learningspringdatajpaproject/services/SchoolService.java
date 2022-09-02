@@ -48,4 +48,6 @@ public interface SchoolService {
 
     List<Course> getAllCourses();
 
+    List<CourseClass> getAllCourseClassesInACourseByTitle(String courseTitle);
+
 }

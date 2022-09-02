@@ -16,7 +16,7 @@ public class Guardian implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long guardianId;
     private String name;
     private String email;
     private String mobile;

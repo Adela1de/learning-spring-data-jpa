@@ -168,4 +168,11 @@ public class SchoolController {
         );
     }
 
+    @GetMapping("/course")
+    public ResponseEntity<List<CourseClass>> returnCourseClassesByCourseName(
+            @RequestParam("courseName") String courseName)
+    {
+        return ResponseEntity.ok().body(schoolService.getAllCourseClassesInACourseByTitle(courseName));
+    }
+
 }
