@@ -50,4 +50,6 @@ public interface SchoolService {
 
     List<CourseClass> getAllCourseClassesInACourseByTitle(String courseTitle);
 
+    List<CourseClass> getAllCourseClassesOfAStudent(Long studentId);
+
 }

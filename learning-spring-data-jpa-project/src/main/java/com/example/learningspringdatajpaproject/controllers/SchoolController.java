@@ -74,6 +74,12 @@ public class SchoolController {
         return ResponseEntity.ok().body(coursesDTO);
     }
 
+    @GetMapping("/courseClass/student")
+    public ResponseEntity<List<CourseClass>> getAllCourseClassesOfAStudent(@RequestParam("studentId") Long studentId)
+    {
+        return ResponseEntity.ok().body(schoolService.getAllCourseClassesOfAStudent(studentId));
+    }
+
     @PostMapping("/student/new")
     public ResponseEntity<Student> addStudent(@RequestBody Student student)
     {

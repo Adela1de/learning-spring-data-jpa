@@ -171,6 +171,13 @@ public class SchoolServiceImpl implements SchoolService {
         return course.getClasses();
     }
 
+    @Override
+    public List<CourseClass> getAllCourseClassesOfAStudent(Long studentId) {
+        var student = findStudentByIdOrElseThrowException(studentId);
+        if(student.getClasses().isEmpty()) throw new StudentDoesNotHaveCourseClasses("Student is no taking any class");
+        return student.getClasses();
+    }
+
     private Student findStudentByIdOrElseThrowException(Long studentId)
     {
         return studentRepository.findById(studentId).orElseThrow(
