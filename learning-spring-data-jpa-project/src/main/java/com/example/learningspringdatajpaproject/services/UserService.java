@@ -2,7 +2,6 @@ package com.example.learningspringdatajpaproject.services;
 
 import com.example.learningspringdatajpaproject.entities.Student;
 import com.example.learningspringdatajpaproject.entities.Teacher;
-import com.example.learningspringdatajpaproject.entities.User;
 
 public interface UserService {
 
@@ -10,5 +9,7 @@ public interface UserService {
 
     Teacher registerTeacher(Teacher teacher);
 
-    User getUserByEmailAndPassword(String userEmail, String studentPassword);
+    Student logInStudent(String studentEmail, String studentPassword);
+
+    Teacher logInTeacher(String teacherEmail, String teacherPassword);
 }

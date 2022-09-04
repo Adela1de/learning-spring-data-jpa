@@ -2,6 +2,8 @@ package com.example.learningspringdatajpaproject.controllers;
 
 import com.example.learningspringdatajpaproject.entities.Student;
 import com.example.learningspringdatajpaproject.entities.Teacher;
+import com.example.learningspringdatajpaproject.requests.StudentLogInRequestBody;
+import com.example.learningspringdatajpaproject.requests.TeacherLogInRequestBody;
 import com.example.learningspringdatajpaproject.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,5 +29,21 @@ public class UserController {
         return ResponseEntity.ok().body(userService.registerTeacher(teacher));
     }
 
+    @PostMapping("/login/student")
+    public ResponseEntity<Student> studentLogIn(@RequestBody StudentLogInRequestBody studentLogInRequestBody)
+    {
+        return ResponseEntity.ok().body(userService.logInStudent(
+                studentLogInRequestBody.getEmail(),
+                studentLogInRequestBody.getPassword())
+        );
+    }
 
+    @PostMapping("/login/teacher")
+    public ResponseEntity<Teacher> teacherLogIn(@RequestBody TeacherLogInRequestBody teacherLogInRequestBody)
+    {
+        return ResponseEntity.ok().body(userService.logInTeacher(
+                teacherLogInRequestBody.getEmail(),
+                teacherLogInRequestBody.getPassword())
+        );
+    }
 }
