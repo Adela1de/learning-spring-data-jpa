@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "tb_student")
-@DiscriminatorValue("studentId")
 @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
@@ -35,7 +34,7 @@ public class Student extends User implements Serializable {
 
     public Student(String firstName, String lastName, String email, String password)
     {
-        super(email, password);
+        super(email, password, "STUDENT");
         this.firstName = firstName;
         this.lastName = lastName;
     }

@@ -2,6 +2,7 @@ package com.example.learningspringdatajpaproject.services.Impl;
 
 import com.example.learningspringdatajpaproject.entities.Student;
 import com.example.learningspringdatajpaproject.entities.Teacher;
+import com.example.learningspringdatajpaproject.entities.User;
 import com.example.learningspringdatajpaproject.exceptions.ObjectNotFoundException;
 import com.example.learningspringdatajpaproject.exceptions.WrongEmailOrPasswordException;
 import com.example.learningspringdatajpaproject.repositories.StudentRepository;
@@ -20,30 +21,30 @@ public class UserServiceImpl implements UserService {
     private final TeacherRepository teacherRepository;
 
     @Override
-    public Student registerStudent(Student student) { return userRepository.save(student); }
-
-    @Override
-    public Teacher registerTeacher(Teacher teacher) { return userRepository.save(teacher); }
-
-    @Override
-    public Student logInStudent(String studentEmail, String studentPassword) {
-        var student = userRepository.findByEmail(studentEmail).orElseThrow(
-                () -> new ObjectNotFoundException("User not found")
-        );
-
-        if(!student.getPassword().equals(studentPassword)) throw new WrongEmailOrPasswordException("Wrong credentials!");
-
-        return (Student) student;
+    public Student registerStudent(Student student)
+    {
+        student.setRole("STUDENT");
+        return userRepository.save(student);
     }
 
     @Override
-    public Teacher logInTeacher(String teacherEmail, String teacherPassword) {
-        var teacher = userRepository.findByEmail(teacherEmail).orElseThrow(
-                () -> new ObjectNotFoundException("User not found")
+    public Teacher registerTeacher(Teacher teacher)
+    {
+        teacher.setRole("TEACHER");
+        return userRepository.save(teacher);
+    }
+
+    @Override
+    public <T extends User> T userLogIn(String userEmail, String userPassword) {
+        var user = userRepository.findByEmail(userEmail).orElseThrow(
+                () -> new ObjectNotFoundException("User not found! ")
         );
 
-        if(!teacher.getPassword().equals(teacherPassword)) throw new WrongEmailOrPasswordException("Wrong credentials!");
+        if(!user.getPassword().equals(userPassword)) throw new WrongEmailOrPasswordException("Wrong credentials!");
 
-        return (Teacher) teacher;
+        return (T) user;
     }
+
+
+
 }

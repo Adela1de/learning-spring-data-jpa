@@ -21,10 +21,12 @@ public class User implements Serializable{
     @Column(name = "email_address")
     private String email;
     private String password;
+    private String role;
     private boolean enabled = false;
 
-    public User(String email, String password) {
+    public User(String email, String password, String role) {
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 }

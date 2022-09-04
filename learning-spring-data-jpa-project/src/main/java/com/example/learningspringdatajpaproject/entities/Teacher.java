@@ -11,7 +11,6 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "tb_teacher")
-@DiscriminatorValue("teacherId")
 @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
@@ -24,7 +23,7 @@ public class Teacher extends User implements Serializable {
     private Course course;
 
     public Teacher(String firstName, String lastName, String email, String password) {
-        super(email, password);
+        super(email, password, "TEACHER");
         this.firstName = firstName;
         this.lastName = lastName;
     }
