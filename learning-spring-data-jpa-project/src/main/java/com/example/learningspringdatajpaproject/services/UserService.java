@@ -3,6 +3,7 @@ package com.example.learningspringdatajpaproject.services;
 import com.example.learningspringdatajpaproject.entities.Student;
 import com.example.learningspringdatajpaproject.entities.Teacher;
 import com.example.learningspringdatajpaproject.entities.User;
+import com.example.learningspringdatajpaproject.entities.VerificationToken;
 
 public interface UserService {
 
@@ -10,5 +11,7 @@ public interface UserService {
 
     Teacher registerTeacher(Teacher teacher);
 
-    <T extends User> T userLogIn(String userEmail, String userPassword);
+    User userLogIn(String userEmail, String userPassword);
+
+    VerificationToken saveVerificationTokenForUser(User user, String token);
 }
