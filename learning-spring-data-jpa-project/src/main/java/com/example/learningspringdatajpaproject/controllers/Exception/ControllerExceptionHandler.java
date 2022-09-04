@@ -65,4 +65,12 @@ public class ControllerExceptionHandler {
         var error = new StandardError(HttpStatus.BAD_REQUEST.value(), System.currentTimeMillis(), e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+    @ExceptionHandler(WrongTypeException.class)
+    public ResponseEntity<StandardError> wrongTypeException(WrongTypeException e,
+                                                                         ServletRequest s)
+    {
+        var error = new StandardError(HttpStatus.BAD_REQUEST.value(), System.currentTimeMillis(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 }
