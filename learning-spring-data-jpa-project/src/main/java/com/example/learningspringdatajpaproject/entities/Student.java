@@ -1,6 +1,7 @@
 package com.example.learningspringdatajpaproject.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,18 +12,14 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "tb_student")
+@DiscriminatorValue("studentId")
+@PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public class Student implements Serializable {
+public class Student extends User implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long studentId;
     private String firstName;
     private String lastName;
-    private String password;
-    @Column(name = "email_address")
-    private String email;
     @OneToOne(mappedBy = "student")
     private Guardian guardian;
     @ManyToOne
@@ -38,10 +35,9 @@ public class Student implements Serializable {
 
     public Student(String firstName, String lastName, String email, String password)
     {
+        super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
-        this.password = password;
     }
 
 }

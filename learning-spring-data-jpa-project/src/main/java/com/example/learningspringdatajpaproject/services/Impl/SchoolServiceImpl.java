@@ -174,8 +174,8 @@ public class SchoolServiceImpl implements SchoolService {
     @Override
     public List<CourseClass> getAllCourseClassesOfAStudent(Long studentId) {
         var student = findStudentByIdOrElseThrowException(studentId);
-        if(student.getClasses().isEmpty()) throw new StudentDoesNotHaveCourseClasses("Student is no taking any class");
-        return student.getClasses();
+        if(!student.getClasses().isEmpty()) return student.getClasses();
+        return null;
     }
 
     private Student findStudentByIdOrElseThrowException(Long studentId)

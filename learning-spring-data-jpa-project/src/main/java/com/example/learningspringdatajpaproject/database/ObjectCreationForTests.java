@@ -42,11 +42,11 @@ public class ObjectCreationForTests {
         var c4 = new Course("Course title 4");
         var c5 = new Course("Course title 5");
 
-        var t1 = new Teacher("Name1", "Nastname1");
-        var t2 = new Teacher("Name3", "Nastname2");
-        var t3 = new Teacher("Name4", "Nastname3");
-        var t4 = new Teacher("Name5", "Nastname4");
-        var t5 = new Teacher("Name6", "Nastname5");
+        var t1 = new Teacher("Name1", "Nastname1", "teacheremail1@gmail.com", "00000000");
+        var t2 = new Teacher("Name3", "Nastname2", "teacheremail2@gmail.com", "00000000");
+        var t3 = new Teacher("Name4", "Nastname3", "teacheremail3@gmail.com", "00000000");
+        var t4 = new Teacher("Name5", "Nastname4", "teacheremail4@gmail.com", "00000000");
+        var t5 = new Teacher("Name6", "Nastname5", "teacheremail5@gmail.com", "00000000");
 
         studentRepository.saveAll(Arrays.asList(s1, s2, s3, s4, s5));
         guardianRepository.saveAll(Arrays.asList(g1, g2, g3, g4, g5));
