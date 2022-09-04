@@ -5,7 +5,6 @@ import com.example.learningspringdatajpaproject.dtos.StudentDTO;
 import com.example.learningspringdatajpaproject.entities.*;
 import com.example.learningspringdatajpaproject.mappers.CourseMapper;
 import com.example.learningspringdatajpaproject.mappers.StudentMapper;
-import com.example.learningspringdatajpaproject.requests.StudentLogInRequestBody;
 import com.example.learningspringdatajpaproject.services.SchoolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -80,12 +79,6 @@ public class SchoolController {
         return ResponseEntity.ok().body(schoolService.getAllCourseClassesOfAStudent(studentId));
     }
 
-    @PostMapping("/student/new")
-    public ResponseEntity<Student> addStudent(@RequestBody Student student)
-    {
-        return ResponseEntity.ok().body(schoolService.saveStudent(student));
-    }
-
     @PostMapping("/guardian/new")
     public ResponseEntity<Guardian> addGuardian(@RequestBody Guardian guardian)
     {
@@ -93,15 +86,9 @@ public class SchoolController {
     }
 
     @PostMapping("/course/new")
-    public ResponseEntity<Course> addGuardian(@RequestBody Course course)
+    public ResponseEntity<Course> addCourse(@RequestBody Course course)
     {
         return ResponseEntity.ok().body(schoolService.saveCourse(course));
-    }
-
-    @PostMapping("/teacher/new")
-    public ResponseEntity<Teacher> addTeacher(@RequestBody Teacher teacher)
-    {
-        return ResponseEntity.ok().body(schoolService.saveTeacher(teacher));
     }
 
     @PostMapping("/courseMaterial/new")
@@ -164,14 +151,6 @@ public class SchoolController {
                                                            @RequestBody CourseClassStudentGrade grade)
     {
         return ResponseEntity.ok().body(schoolService.assignGradeToClass(StudentId, courseClassId, grade));
-    }
-
-    @PostMapping("/student/login")
-    public ResponseEntity<Student> studentLogIng(@RequestBody StudentLogInRequestBody studentLogInRequestBody)
-    {
-        return ResponseEntity.ok().body(schoolService.getStudentByEmailAndPassword(
-                studentLogInRequestBody.getEmail(), studentLogInRequestBody.getPassword())
-        );
     }
 
     @GetMapping("/course")

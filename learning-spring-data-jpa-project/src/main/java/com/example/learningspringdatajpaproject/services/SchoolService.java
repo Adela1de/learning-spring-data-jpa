@@ -6,13 +6,9 @@ import java.util.List;
 
 public interface SchoolService {
 
-    Student saveStudent(Student student);
-
     Guardian saveGuardian(Guardian guardian);
 
     Course saveCourse(Course course);
-
-    Teacher saveTeacher(Teacher teacher);
 
     CourseMaterial saveCourseMaterial(CourseMaterial courseMaterial);
 
@@ -43,8 +39,6 @@ public interface SchoolService {
     CourseMaterial getCourseMaterialById(Long courseMaterialId);
 
     CourseClass getCourseClassById(Long courseClassId);
-
-    Student getStudentByEmailAndPassword(String studentEmail, String studentPassword);
 
     List<Course> getAllCourses();
 

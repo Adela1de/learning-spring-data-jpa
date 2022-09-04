@@ -23,16 +23,10 @@ public class SchoolServiceImpl implements SchoolService {
     private final CourseClassStudentGradeRepository courseClassStudentGradeRepository;
 
     @Override
-    public Student saveStudent(Student student) { return studentRepository.save(student); }
-
-    @Override
     public Guardian saveGuardian(Guardian guardian) { return guardianRepository.save(guardian); }
 
     @Override
     public Course saveCourse(Course course) { return courseRepository.save(course); }
-
-    @Override
-    public Teacher saveTeacher(Teacher teacher) { return teacherRepository.save(teacher); }
 
     @Override
     public CourseMaterial saveCourseMaterial(CourseMaterial courseMaterial)
@@ -148,16 +142,6 @@ public class SchoolServiceImpl implements SchoolService {
     public CourseClass getCourseClassById(Long courseClassId)
     {
         return findCourseClassByIdOrElseThrowException(courseClassId);
-    }
-
-    @Override
-    public Student getStudentByEmailAndPassword(String studentEmail, String studentPassword) {
-        var student = findStudentByEmailOrElseThrowException(studentEmail);
-
-        if(!student.getPassword().equals(studentPassword))
-            throw new WrongEmailOrPasswordException("Wrong e-mail or password!");
-
-        return student;
     }
 
     @Override
