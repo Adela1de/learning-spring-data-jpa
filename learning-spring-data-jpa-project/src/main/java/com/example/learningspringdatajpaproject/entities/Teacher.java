@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
 @Entity
@@ -14,7 +13,7 @@ import java.io.Serializable;
 @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public class Teacher extends User implements Serializable {
+public class Teacher extends User {
 
     private String firstName;
     private String lastName;

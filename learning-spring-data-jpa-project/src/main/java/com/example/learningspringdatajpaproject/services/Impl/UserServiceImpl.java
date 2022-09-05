@@ -43,7 +43,8 @@ public class UserServiceImpl implements UserService {
                 () -> new ObjectNotFoundException("User not found! ")
         );
 
-        if(!user.getPassword().equals(userPassword)) throw new WrongEmailOrPasswordException("Wrong credentials!");
+        if(!user.getPassword().equals(passwordEncoder.encode(userPassword)))
+            throw new WrongEmailOrPasswordException("Wrong credentials!");
 
         return user;
     }

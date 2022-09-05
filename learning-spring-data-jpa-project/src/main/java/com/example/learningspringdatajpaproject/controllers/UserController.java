@@ -30,30 +30,29 @@ public class UserController {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @PostMapping("/register/student")
-    public ResponseEntity<String> registerStudent(@RequestBody Student student,
+    public ResponseEntity<Student> registerStudent(@RequestBody Student student,
                                                   HttpServletRequest request)
     {
         var user = userService.registerStudent(student);
         applicationEventPublisher.publishEvent(new RegistrationEvent(user, applicationUrl(request)));
-        return ResponseEntity.ok().body("Student successfully registered");
+        return ResponseEntity.ok().body(user);
     }
 
     @PostMapping("/register/teacher")
-    public ResponseEntity<String> registerTeacher(@RequestBody Teacher teacher,
+    public ResponseEntity<Teacher> registerTeacher(@RequestBody Teacher teacher,
                                                   HttpServletRequest request)
     {
+
         var user = userService.registerTeacher(teacher);
         applicationEventPublisher.publishEvent(new RegistrationEvent(user, applicationUrl(request)));
-        return ResponseEntity.ok().body("teacher successfully registered");
+        return ResponseEntity.ok().body(user);
     }
 
     @PostMapping("/login/student")
     public ResponseEntity<UserStudentDTO> studentLogIn(@RequestBody UserLogInRequestBody userLogInRequestBody)
     {
-        var user = getUser(userLogInRequestBody);
-
-        if(!user.getRole().equalsIgnoreCase("STUDENT"))
-            throw new WrongTypeException("User is not a student!");
+        String role = "STUDENT";
+        var user = getUser(userLogInRequestBody, role);
 
         var userStudentDTO = studentMapper.toUserStudentDTO(user);
         return ResponseEntity.ok().body(userStudentDTO);
@@ -62,20 +61,21 @@ public class UserController {
     @PostMapping("/login/teacher")
     public ResponseEntity<UserTeacherDTO> teacherLogIn(@RequestBody UserLogInRequestBody userLogInRequestBody)
     {
-        var user = getUser(userLogInRequestBody);
-
-        if(!user.getRole().equalsIgnoreCase("TEACHER"))
-            throw new WrongTypeException("User is not a teacher!");
+        String role = "TEACHER";
+        var user = getUser(userLogInRequestBody, role);
 
         var userTeacherDTO = teacherMapper.toUserTeacherDTO(user);
         return ResponseEntity.ok().body(userTeacherDTO);
     }
 
-    private User getUser(UserLogInRequestBody userLogInRequestBody)
+    private User getUser(UserLogInRequestBody userLogInRequestBody, String role)
     {
-        return userService.userLogIn(
-            userLogInRequestBody.getEmail(),
-            userLogInRequestBody.getPassword());
+        var user = userService.userLogIn(
+                        userLogInRequestBody.getEmail(),
+                        userLogInRequestBody.getPassword());
+
+        if(!user.getRole().equalsIgnoreCase(role)) throw new WrongTypeException("User is not a " + role.toLowerCase()+ " !");
+        return user;
     }
 
     private String applicationUrl(HttpServletRequest request)
