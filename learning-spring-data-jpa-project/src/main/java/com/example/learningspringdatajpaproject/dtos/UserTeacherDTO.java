@@ -9,6 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserTeacherDTO {
 
+    private Long userId;
     private String firstName;
     private String lastName;
+    private String role;
 }

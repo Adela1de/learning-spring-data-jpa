@@ -39,6 +39,12 @@ public class CourseClass {
     @ManyToMany(mappedBy = "classes")
     @JsonIgnore
     private List<CourseClassStudentGrade> courseClassStudentGrades = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(
+            name = "teacher_id",
+            foreignKey = @ForeignKey(name = "course_class_teacher_id")
+    )
+    private Teacher teacher;
 
     public CourseClass(String title, Integer credit) {
         this.title = title;

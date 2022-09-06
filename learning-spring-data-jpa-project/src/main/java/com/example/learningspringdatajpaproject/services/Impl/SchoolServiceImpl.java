@@ -60,17 +60,6 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public Course assignTeacherToCourse(Long teacherId, Long courseId) {
-        var teacher = findTeacherByIdOrElseThrowException(teacherId);
-        var course = findCourseByIdOrElseThrowException(courseId);
-
-        verifyCourseAlreadyHasATeacher(course);
-
-        course.setTeacher(teacher);
-        return courseRepository.save(course);
-    }
-
-    @Override
     public Course assignCourseMaterialToCourse(Long courseId, Long courseMaterialId) {
         var course = findCourseByIdOrElseThrowException(courseId);
         var courseMaterial = findCourseMaterialByIdOrElseThrowException(courseMaterialId);
@@ -228,9 +217,9 @@ public class SchoolServiceImpl implements SchoolService {
             throw new StudentIsAlreadyTakingACourseException("This student can't change course! ");
     }
 
-    private void verifyCourseAlreadyHasATeacher(Course course) {
-        if(course.getTeacher() != null)
-            throw new CourseAlreadyHasTeacherException("This course already has a teacher! ");
+    private void verifyCourseClassAlreadyHasATeacher(CourseClass courseClass) {
+        if(courseClass.getTeacher() != null)
+            throw new CourseAlreadyHasTeacherException("This class already has a teacher! ");
     }
 
     private void verifyCourseAlreadyHasMaterial(Course course) {

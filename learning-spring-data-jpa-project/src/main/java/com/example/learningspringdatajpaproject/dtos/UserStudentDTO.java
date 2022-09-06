@@ -13,10 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 public class UserStudentDTO{
 
+    private Long userId;
     private String firstName;
     private String lastName;
     private String courseTitle;
     private List<CourseClass> courseClasses;
     private List<CourseClassStudentGrade> grades;
+    private String role;
 
 }

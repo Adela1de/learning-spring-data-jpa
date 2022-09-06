@@ -25,12 +25,6 @@ public class Course implements Serializable {
     private List<Student> students = new ArrayList<>();
     @OneToOne
     @JoinColumn(
-            name = "teacher_id",
-            foreignKey = @ForeignKey(name = "course_teacher_id")
-    )
-    private Teacher teacher;
-    @OneToOne
-    @JoinColumn(
             name = "course_material_id",
             foreignKey = @ForeignKey(name = "course_course_material_id")
     )

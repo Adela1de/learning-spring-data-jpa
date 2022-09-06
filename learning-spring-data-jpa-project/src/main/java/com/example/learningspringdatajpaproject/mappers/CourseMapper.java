@@ -24,10 +24,6 @@ public class CourseMapper {
         var courseDTO = new CourseDTO();
         courseDTO.setCourseId(course.getCourseId());
         courseDTO.setTitle(course.getTitle());
-
-        if(course.getTeacher() != null)
-            courseDTO.setTeacherName(course.getTeacher().getFirstName());
-
         return courseDTO;
     }
 }

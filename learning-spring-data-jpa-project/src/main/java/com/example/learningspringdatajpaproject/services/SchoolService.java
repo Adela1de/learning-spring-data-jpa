@@ -18,8 +18,6 @@ public interface SchoolService {
 
     Student assignStudentToACourse(Long studentId, Long courseId);
 
-    Course assignTeacherToCourse(Long teacherId, Long courseId);
-
     Course assignCourseMaterialToCourse(Long courseId, Long courseMaterialId);
 
     CourseClass assignCourseClassToCourse(Long courseId, Long courseClassId);

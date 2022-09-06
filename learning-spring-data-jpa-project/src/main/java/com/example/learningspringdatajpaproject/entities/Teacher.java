@@ -19,7 +19,7 @@ public class Teacher extends User {
     private String lastName;
     @OneToOne(mappedBy = "teacher")
     @JsonIgnore
-    private Course course;
+    private CourseClass courseClass;
 
     public Teacher(String firstName, String lastName, String email, String password) {
         super(email, password, "TEACHER");

@@ -117,11 +117,11 @@ public class SchoolController {
         return ResponseEntity.ok().body(schoolService.assignStudentToACourse(studentId, courseId));
     }
 
-    @PostMapping("/course/teacher/set/{teacherId}/{courseId}")
-    public ResponseEntity<Course> setTeacherToCourse(@PathVariable("teacherId") Long teacherId,
-                                                      @PathVariable("courseId") Long courseId)
+    @PostMapping("/courseClass/teacher/set/{teacherId}/{courseId}")
+    public ResponseEntity<Course> setTeacherToCourseClass(@PathVariable("teacherId") Long teacherId,
+                                                         @PathVariable("courseId") Long courseClassId)
     {
-        return ResponseEntity.ok().body(schoolService.assignTeacherToCourse(teacherId, courseId));
+        return ResponseEntity.ok().body(null);
     }
 
     @PostMapping("/course/courseMaterial/set/{courseId}/{courseMaterialId}")
