@@ -5,7 +5,6 @@ import com.example.learningspringdatajpaproject.dtos.UserTeacherDTO;
 import com.example.learningspringdatajpaproject.entities.Student;
 import com.example.learningspringdatajpaproject.entities.Teacher;
 import com.example.learningspringdatajpaproject.entities.User;
-import com.example.learningspringdatajpaproject.events.ConfirmRegistrationEvent;
 import com.example.learningspringdatajpaproject.events.RegistrationEvent;
 import com.example.learningspringdatajpaproject.exceptions.WrongTypeException;
 import com.example.learningspringdatajpaproject.mappers.StudentMapper;
@@ -70,14 +69,9 @@ public class UserController {
     }
 
     @GetMapping("/confirmRegistration")
-    public ResponseEntity<String> confirmRegistration(@RequestParam("token") String token,
-                                                      HttpServletRequest request)
+    public ResponseEntity<String> confirmRegistration(@RequestParam("token") String token)
     {
-        applicationEventPublisher.publishEvent(
-                new ConfirmRegistrationEvent(
-                        token,
-                        applicationUrl(request))
-        );
+        userService.validateVerificationToken(token);
         return ResponseEntity.ok().body("User registration confirmed!");
     }
 

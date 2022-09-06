@@ -21,5 +21,8 @@ public class RegistrationEventListener implements ApplicationListener<Registrati
         var token = UUID.randomUUID().toString();
         var user = event.getUser();
         userService.saveVerificationTokenForUser(user, token);
+
+        var urlConfirmation = event.getUrl() + "/users/confirmRegistration?token=" + token;
+        log.info("Click the link to enable your account " + urlConfirmation);
     }
 }

@@ -10,11 +10,11 @@ import org.springframework.context.ApplicationEvent;
 public class RegistrationEvent extends ApplicationEvent {
 
     private User user;
-    private String applicationUrl;
+    private String url;
 
-    public RegistrationEvent(User user, String applicationUrl) {
+    public RegistrationEvent(User user, String url) {
         super(user);
         this.user = user;
-        this.applicationUrl = applicationUrl;
+        this.url = url;
     }
 }
