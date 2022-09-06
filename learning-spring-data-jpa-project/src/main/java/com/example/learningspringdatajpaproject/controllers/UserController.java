@@ -5,6 +5,7 @@ import com.example.learningspringdatajpaproject.dtos.UserTeacherDTO;
 import com.example.learningspringdatajpaproject.entities.Student;
 import com.example.learningspringdatajpaproject.entities.Teacher;
 import com.example.learningspringdatajpaproject.entities.User;
+import com.example.learningspringdatajpaproject.events.ConfirmRegistrationEvent;
 import com.example.learningspringdatajpaproject.events.RegistrationEvent;
 import com.example.learningspringdatajpaproject.exceptions.WrongTypeException;
 import com.example.learningspringdatajpaproject.mappers.StudentMapper;
@@ -68,13 +69,26 @@ public class UserController {
         return ResponseEntity.ok().body(userTeacherDTO);
     }
 
+    @GetMapping("/confirmRegistration")
+    public ResponseEntity<String> confirmRegistration(@RequestParam("token") String token,
+                                                      HttpServletRequest request)
+    {
+        applicationEventPublisher.publishEvent(
+                new ConfirmRegistrationEvent(
+                        token,
+                        applicationUrl(request))
+        );
+        return ResponseEntity.ok().body("User registration confirmed!");
+    }
+
     private User getUser(UserLogInRequestBody userLogInRequestBody, String role)
     {
         var user = userService.userLogIn(
                         userLogInRequestBody.getEmail(),
                         userLogInRequestBody.getPassword());
 
-        if(!user.getRole().equalsIgnoreCase(role)) throw new WrongTypeException("User is not a " + role.toLowerCase()+ " !");
+        if(!user.getRole().equalsIgnoreCase(role))
+            throw new WrongTypeException("User is not a " + role.toLowerCase()+ " !");
         return user;
     }
 
