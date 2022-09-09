@@ -231,11 +231,14 @@ public class SchoolServiceImpl implements SchoolService {
     {
         AtomicBoolean bol = new AtomicBoolean(false);
 
+        if(student.getClasses().contains(courseClass))
+            throw new InvalidClassException("student Already registered in this class");
+
         courseClass.getCourses().forEach((x) -> {
             if(x.getCourseId() == student.getCourse().getCourseId()) bol.set(true);
         });
 
-        if(!bol.get()) throw new InvalidClassException("this class does not belong to this student's grade!");
+        if(!bol.get()) throw new InvalidClassException("This class does not belong to this student's grade!");
     }
 
     private void verifyIfIsValidClass(Student student, CourseClass courseClass)

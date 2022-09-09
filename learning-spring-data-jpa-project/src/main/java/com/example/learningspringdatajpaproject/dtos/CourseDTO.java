@@ -11,6 +11,4 @@ public class CourseDTO {
 
     private Long courseId;
     private String title;
-    private String teacherName;
-
 }
