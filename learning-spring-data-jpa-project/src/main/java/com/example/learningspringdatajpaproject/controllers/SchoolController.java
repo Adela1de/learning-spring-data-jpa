@@ -1,8 +1,10 @@
 package com.example.learningspringdatajpaproject.controllers;
 
+import com.example.learningspringdatajpaproject.dtos.CourseClassDTO;
 import com.example.learningspringdatajpaproject.dtos.CourseDTO;
 import com.example.learningspringdatajpaproject.dtos.StudentDTO;
 import com.example.learningspringdatajpaproject.entities.*;
+import com.example.learningspringdatajpaproject.mappers.CourseClassMapper;
 import com.example.learningspringdatajpaproject.mappers.CourseMapper;
 import com.example.learningspringdatajpaproject.mappers.StudentMapper;
 import com.example.learningspringdatajpaproject.services.SchoolService;
@@ -22,6 +24,7 @@ public class SchoolController {
     private final SchoolService schoolService;
     private final CourseMapper courseMapper;
     private final StudentMapper studentMapper;
+    private final CourseClassMapper courseClassMapper;
 
     @GetMapping("/student/{studentId}")
     public ResponseEntity<StudentDTO> getStudentById(@PathVariable("studentId") Long studentId)
@@ -74,9 +77,15 @@ public class SchoolController {
     }
 
     @GetMapping("/courseClass/student")
-    public ResponseEntity<List<CourseClass>> getAllCourseClassesOfAStudent(@RequestParam("studentId") Long studentId)
+    public ResponseEntity<List<CourseClassDTO>> getAllCourseClassesOfAStudent(@RequestParam("studentId") Long studentId)
     {
-        return ResponseEntity.ok().body(schoolService.getAllCourseClassesOfAStudent(studentId));
+        var courseClasses = schoolService.getAllCourseClassesOfAStudent(studentId);
+        var courseClassesDTO =
+                courseClasses.
+                stream().
+                map(courseClassMapper::toCourseDTOCustomized).
+                collect(Collectors.toList());
+        return ResponseEntity.ok().body(courseClassesDTO);
     }
 
     @PostMapping("/guardian/new")
@@ -118,10 +127,10 @@ public class SchoolController {
     }
 
     @PostMapping("/courseClass/teacher/set/{teacherId}/{courseId}")
-    public ResponseEntity<Course> setTeacherToCourseClass(@PathVariable("teacherId") Long teacherId,
+    public ResponseEntity<CourseClass> setTeacherToCourseClass(@PathVariable("teacherId") Long teacherId,
                                                          @PathVariable("courseId") Long courseClassId)
     {
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(schoolService.assignTeacherToCourseClass(teacherId, courseClassId));
     }
 
     @PostMapping("/course/courseMaterial/set/{courseId}/{courseMaterialId}")
@@ -154,10 +163,16 @@ public class SchoolController {
     }
 
     @GetMapping("/course")
-    public ResponseEntity<List<CourseClass>> returnCourseClassesByCourseName(
+    public ResponseEntity<List<CourseClassDTO>> returnCourseClassesByCourseName(
             @RequestParam("courseName") String courseName)
     {
-        return ResponseEntity.ok().body(schoolService.getAllCourseClassesInACourseByTitle(courseName));
+        var courseClasses = schoolService.getAllCourseClassesInACourseByTitle(courseName);
+        var courseClassesDTO =
+                courseClasses.
+                stream().
+                map(courseClassMapper::toCourseDTOCustomized).
+                collect(Collectors.toList());
+        return ResponseEntity.ok().body(courseClassesDTO);
     }
 
 }

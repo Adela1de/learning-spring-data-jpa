@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -17,9 +18,9 @@ public class Teacher extends User {
 
     private String firstName;
     private String lastName;
-    @OneToOne(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher")
     @JsonIgnore
-    private CourseClass courseClass;
+    private List<CourseClass> courseClasses;
 
     public Teacher(String firstName, String lastName, String email, String password) {
         super(email, password, "TEACHER");

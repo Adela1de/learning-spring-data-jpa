@@ -24,6 +24,8 @@ public interface SchoolService {
 
     CourseClass assignStudentToCourseClass(Long studentId, Long courseClassId);
 
+    CourseClass assignTeacherToCourseClass(Long teacherId, Long CourseClassId);
+
     Student assignGradeToClass(Long studentId, Long courseClassId, CourseClassStudentGrade grade);
 
     Student getStudentById(Long studentId);

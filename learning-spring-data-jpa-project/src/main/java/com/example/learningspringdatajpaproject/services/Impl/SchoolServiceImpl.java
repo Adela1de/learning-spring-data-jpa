@@ -92,6 +92,18 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
+    public CourseClass assignTeacherToCourseClass(Long teacherId, Long courseClassId) {
+        var teacher = getTeacherById(teacherId);
+        var courseClass = getCourseClassById(courseClassId);
+
+        verifyCourseClassAlreadyHasATeacher(courseClass);
+
+        courseClass.setTeacher(teacher);
+        courseClassRepository.save(courseClass);
+        return courseClass;
+    }
+
+    @Override
     public Student assignGradeToClass(Long studentId, Long courseClassId, CourseClassStudentGrade grade) {
         var student = findStudentByIdOrElseThrowException(studentId);
         var courseClass = findCourseClassByIdOrElseThrowException(courseClassId);
